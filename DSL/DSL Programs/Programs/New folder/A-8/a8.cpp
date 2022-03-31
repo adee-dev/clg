@@ -1,8 +1,8 @@
 
 
-/*NAME: Aaishwarya Darandale
+/*NAME: Aditya Dayal
 
-ROLL NO: 71
+ROLL NO: 20CO001
 Problem statement :A8
 A Dictionary stores keywords & its meanings. Provide facility for adding new keywords, deleting keywords, updating values of any entry.
 Provide facility to display whole data sorted in ascending/ Descending order.
