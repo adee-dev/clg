@@ -1,3 +1,7 @@
+//Aditya Dayal
+//20CO001
+//SE Comp A
+
 #include<iostream>
 #include<stack>
 #include<math.h>
