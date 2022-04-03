@@ -1,4 +1,6 @@
-
+//Aditya Dayal
+//20CO001
+//SE Comp A
 
 #include<iostream>
 using namespace std;
