@@ -1,0 +1,43 @@
+[liveuser@localhost-live clg]$ g++ DSA_practical_assignment_01.cpp 
+[liveuser@localhost-live clg]$ ./a.out 
+Book Tree Creation
+1.Create
+2.Display
+3.Quit
+Enter your choice : 1
+Enter the name of Book: 
+cpp
+Enter the numbers of Chapters is the Book: 
+2
+Enter the name of the Chapter: 
+datatypes
+Enter the number of sections in the Chapter: datatypes
+1
+Enter the name of Section: 
+int_char_bool
+Enter the name of the Chapter: 
+inheritance
+Enter the number of sections in the Chapter: inheritance
+1
+Enter the name of Section: 
+inheritance
+Book Tree Creation
+1.Create
+2.Display
+3.Quit
+Enter your choice : 2
+Book Name : cpp
+Chapter : 1
+1) datatypes
+Sections : 
+1) int_char_bool
+Chapter : 2
+2) inheritance
+Sections : 
+1) inheritance
+Book Tree Creation
+1.Create
+2.Display
+3.Quit
+Enter your choice : 3
+[liveuser@localhost-live clg]$
