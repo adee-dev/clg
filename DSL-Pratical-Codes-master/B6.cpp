@@ -1,215 +1,264 @@
 #include <iostream>
 using namespace std;
-
-struct node
+class node
 {
-    int key;
-    struct node *left,*right;
+public:
+int data;
+node *left;
+node *right;
+};
+class bst
+{
+
+public:
+node *root;
+bst()
+{
+root = NULL;
+}
+void create();
+void insert();
+void postorder(node *);
+void inorder(node *);
+void preorder(node *);
+void search(int key);
+// int search(node*, int key);
+void minimum();
+int height(node *);
 };
 
-
-struct node *insert(struct node *root,int value)
+void bst::minimum()
 {
-    if(root==NULL)
-    {
-        root=new node;
-        root->key=value;
-        root->left=NULL;
-        root->right=NULL;
-        return root;
-    }
-
-    else if (value == root->key)
-    {
-        return root;
-    }
-    else
-    {
-        if(root->key < value)
-            root->right=insert(root->right,value);
-        else
-        {
-            if(root->key > value)
-                root->left=insert(root->left,value);
-        }
-    }
-    return root;
+node *temp;
+int min;
+temp = root;
+while (temp->left != NULL)
+{
+min = temp->data;
+temp = temp->left;
+if (temp->data < min)
+{
+min = temp->data;
 }
-
-
-void inorder(struct node *root)
+else
 {
-    if(root != NULL)
-    {
-        inorder(root->left);
-        cout<<"\t"<<root->key;
-        inorder(root->right);
-    }
-    return;
+temp = temp->left;
 }
-
-void postorder(struct node *root)
-{
-    if(root != NULL)
-    {
-        postorder(root->left);
-        postorder(root->right);
-        cout<<"\t"<<root->key;
-    }
-    return;
 }
-
-void preorder(struct node *root)
-{
-    if(root != NULL)
-    {
-        cout<<"\t"<<root->key;
-        preorder(root->left);
-        preorder(root->right);
-    }
-    return;
+cout << "minimum no. is:" << min;
 }
-
-struct node *search(struct node *root,int value)
+int bst::height(node *root)
 {
-    if (root == NULL || root->key == value)
-       return root;
-
-    if (root->key < value)
-       return search(root->right, value);
-
-    return search(root->left, value);
-}
-struct node *minimumval(struct node *root)
+if (root == NULL)
 {
-    struct node *current=root;
-    while(current->left !=NULL)
-        current=current->left;
-    return current;
-}
-
-struct node *maximumval(struct node *root)
-{
-   struct node *current=root;
-    while(current->right !=NULL)
-        current=current->right;
-    return current;
-}
-
-struct node *swapnodes(struct node *root)
-{
-    node *temp;
-    if(root == NULL)
-        return NULL;
-    temp = root->left;
-    root->left = root->right;
-    root->right = temp;
-    swapnodes(root->left);
-    swapnodes(root->right);
-    return root;
-
-}
-
-int longestpath( node *root)
-{
-if (root==NULL){
 return 0;
 }
-int leftlong=longestpath(root->left);
-int rightlong=longestpath(root->right);
-return max(leftlong,rightlong)+1;
+else
+{
+if (height(root->right) > height(root->left)) // right tree is longer
+{
+return (1 + height(root->right));
+}
+else
+{
+return (1 + height(root->left));
+}
+}
 }
 
+void bst::create()
+{
+node *curr, *temp;
+int ans = 1;
+cout << "enter data:";
+do
+{
+curr = new node;
+cin >> curr->data;
+curr->left = curr->right = NULL;
+if (root == NULL)
+{
+root = curr;
+}
+else
+{
+temp = root;
+while (1)
+{
+if (curr->data <= temp->data)
+{
+if (temp->left == NULL)
+{
+temp->left = curr;
+break;
+}
+else
+{
+temp = temp->left;
+}
+}
+else
+{
+if (temp->right == NULL)
+{
+temp->right = curr;
+break;
+}
+else
+{
+temp = temp->right;
+}
+}
+}
+}
+cout << "want to continue:";
+cin >> ans;
+} while (ans == 1);
+}
+void bst::inorder(node *root)
+{
+if (root != NULL)
+{
+inorder(root->left);
+cout << " " << root->data;
+inorder(root->right);
+}
+}
+void bst::preorder(node *root)
+{
+if (root != NULL)
+{
+cout << " " << root->data;
+preorder(root->left);
+preorder(root->right);
+}
+}
+void bst::postorder(node *root)
+{
+if (root != NULL)
+{
+postorder(root->left);
+postorder(root->right);
+cout << " " << root->data;
+}
+}
+void bst::insert()
+{
+node *curr, *temp;
+int ans = 1;
+cout << "enter data:";
+
+curr = new node;
+cin >> curr->data;
+curr->left = curr->right = NULL;
+if (root == NULL)
+{
+root = curr;
+}
+else
+{
+temp = root;
+while (1)
+{
+if (curr->data <= temp->data)
+{
+if (temp->left == NULL)
+{
+temp->left = curr;
+break;
+}
+else
+{
+temp = temp->left;
+}
+}
+else
+{
+if (temp->right == NULL)
+{
+temp->right = curr;
+break;
+}
+else
+{
+temp = temp->right;
+}
+}
+} // end of while
+}
+}
+
+void bst::search(int key)
+{
+node *curr;
+curr = root;
+
+while (curr != NULL)
+{
+if (curr->data == key)
+{
+cout << "found";
+break;
+}
+else
+{
+if (key < curr->data)
+{
+curr = curr->left;
+}
+else
+{
+curr = curr->right;
+}
+}
+}
+if (curr == NULL) // not found even at the end of the tree.
+{
+cout << "not found";
+}
+}
 
 int main()
 {
-        int choice=0,value=0,value1=0,d;
-        struct node *root=NULL,*searchh=NULL,*position=NULL;
-    do
-    {
-
-        cout<<"\n\n";
-        cout<<"\n ------ Binary Search Tree ------";
-        cout<<"\n [1] Insertion ";
-        cout<<"\n [2] Search ";
-        cout<<"\n [3] Traversals ";
-        cout<<"\n [4] Minimum Value ";
-        cout<<"\n [5] Maximum Value";
-        cout<<"\n [6] Number of nodes in longest path:";
-        cout<<"\n [7] Swap nodes:";
-        cout<<"\n [0] Exit ";
-
-        cout<<"\n Enter the choice: ";
-        cin>>choice;
-
-        switch(choice)
-        {
-            case 1:
-                    cout<<"\n Insertion..!";
-                    cout<<"\n Enter the element to be inserted: ";
-                    cin>>value;
-                    root=insert(root,value);
-
-                    break;
-
-            case 2:
-                    cout<<"\n Search..!";
-                    cout<<"\n Enter the element to be searched: ";
-                    cin>>value;
-                    searchh=search(root,value);
-                    if(searchh == NULL)
-                        cout<<"\n Key not found!";
-                    else
-                    {
-                        cout<<"\n"<<" Key "<<searchh->key<<" Found!";
-                    }
-                    break;
-            case 3:
-                    cout<<"\n Traversals..!";
-                    cout<<"\n Inorder: ";
-                    inorder(root);
-                    cout<<"\n Preorder: ";
-                    preorder(root);
-                    cout<<"\n Postorder: ";
-                    postorder(root);
-                    break;
-           case 4:
-                    cout<<"\n Minimum Value..!";
-                    if(root == NULL)
-                        cout<<"\n No minimum values in empty tree";
-                    else
-                    {
-                        value=minimumval(root)->key;
-                        cout<<"\n Smallest value in the tree: "<<value;
-                   }
-                    break;
-            case 5:
-                    cout<<"\n Maximum Value..!";
-                    if(root == NULL)
-                        cout<<"\n No maximum values in empty tree";
-                    else
-                    {
-                        value=maximumval(root)->key;
-                        cout<<"\n Largest value in the tree: "<<value;
-                    }
-
-                    break;
-            case 6:
-                  d=longestpath(root);
-                  cout<<"The no. of nodes in the longest path are:"<<d<<endl;
-                  break;
-            case 7:
-                swapnodes(root);
-                break;
-            case 0:
-                    cout<<"\n Exiting..!";
-                    break;
-            default:
-                    cout<<"\n Invalid Choice!";
-                    break;
-        }
-
-    }while(choice!=0);
-
-    return 0;
+bst b;
+int key, ch;
+do
+{
+cout << "\n1.create\n2.insert\n3.inorder\n4.preorder\n5.postorder\n6.search\n7.minimum\n8.height\npress 0 to exit\n";
+cout << "enter your choice:";
+cin >> ch;
+switch (ch)
+{
+case 1:
+b.create();
+break;
+case 2:
+b.insert();
+break;
+case 3:
+cout << "inorder traversal is\n";
+b.inorder(b.root);
+break;
+case 4:
+cout << "preorder traversal is\n";
+b.preorder(b.root);
+break;
+case 5:
+cout << "postorder traversal is\n";
+b.postorder(b.root);
+break;
+case 6:
+cout << "\nenter key:";
+cin >> key;
+b.search(key);
+break;
+case 7:
+b.minimum();
+break;
+case 8:
+cout << "height of tree: " << b.height(b.root);
+break;
+}
+} while (ch != 0);
+return 0;
 }
